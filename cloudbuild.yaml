@@ -2,7 +2,7 @@ steps:
 # Run unit tests
 - name: 'gcr.io/cloud-builders/go'
   args: ['install', '.']
-  env: ['PROJECT_ROOT=github.com/pcman312/hackathon']
+  env: ['PROJECT_ROOT=github.com/pcman312/hackathon/server']
 - name: 'gcr.io/cloud-builders/go:debian'
   args: ['test', '-v', '-race', './...']
-  env: ['PROJECT_ROOT=github.com/pcman312/hackathon']
+  env: ['PROJECT_ROOT=github.com/pcman312/hackathon/server']
