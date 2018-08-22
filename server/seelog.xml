@@ -1,0 +1,31 @@
+<seelog type="asynctimer" asyncinterval="1000000">
+	<outputs formatid="all">
+		<filter levels="info" formatid="fmtinfo" >
+			<console/>
+			<!--<rollingfile type="size" filename="/var/log/persistent/configurator.log" maxsize="20000000" maxrolls="5" />-->
+		</filter>
+		<filter levels="warn" formatid="fmtwarn">
+			<console/>
+			<!--<rollingfile type="size" filename="/var/log/persistent/configurator.log" maxsize="20000000" maxrolls="5" />-->
+		</filter>
+		<filter levels="error,critical" formatid="fmterror">
+			<console/>
+			<!--<rollingfile type="size" filename="/var/log/persistent/configurator.log" maxsize="20000000" maxrolls="5" />-->
+		</filter>
+		<filter levels="debug" formatid="fmtdebug">
+			<console/>
+			<!--<rollingfile type="size" filename="/var/log/persistent/configurator.log" maxsize="20000000" maxrolls="5" />-->
+		</filter>
+		<filter levels="trace">
+			<console/>
+			<!--<rollingfile type="size" filename="/var/log/persistent/configurator.log" maxsize="20000000" maxrolls="5" />-->
+		</filter>
+	</outputs>
+	<formats>
+		<format id="fmtinfo" format="%EscM(32)[%Level]%EscM(0) [%Date(2006-01-02 15:04:05.000)] [%File:%Line] %Msg%n"/>
+		<format id="fmterror" format="%EscM(31)[%LEVEL]%EscM(0) [%Date(2006-01-02 15:04:05.000)] [%FuncShort @ %File:%Line] %Msg%n"/>
+		<format id="fmtwarn" format="%EscM(33)[%LEVEL]%EscM(0) [%Date(2006-01-02 15:04:05.000)] [%FuncShort @ %File:%Line] %Msg%n"/>
+		<format id="fmtdebug" format="%EscM(35)[%LEVEL]%EscM(0) [%Date(2006-01-02 15:04:05.000)] [%FuncShort @ %File:%Line] %Msg%n"/>
+		<format id="all" format="%EscM(2)[%LEVEL]%EscM(0) [%Date(2006-01-02 15:04:05.000)] [%FuncShort @ %File:%Line] %Msg%n"/>
+	</formats>
+</seelog>
