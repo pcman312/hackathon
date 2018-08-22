@@ -1,8 +1,14 @@
 steps:
 # Run unit tests
 - name: 'gcr.io/cloud-builders/go'
-  args: ['install', '.']
-  env: ['PROJECT_ROOT=github.com/pcman312/hackathon/server']
+  args: ['install', 'github.com/pcman312/hackathon']
+  env: ['PROJECT_ROOT=github.com/pcman312/hackathon']
 - name: 'gcr.io/cloud-builders/go:debian'
   args: ['test', '-v', '-race', './...']
-  env: ['PROJECT_ROOT=github.com/pcman312/hackathon/server']
+  env: ['PROJECT_ROOT=github.com/pcman312/hackathon']
+
+# Run component tests
+- name: 'docker/compose:1.15.0'
+  args: ['up', '--abort-on-container-exit', '--exit-code-from', 'component-test']
+  env:
+  - 'PROJECT_ID=$PROJECT_ID'

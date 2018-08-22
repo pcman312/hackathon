@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/grpc"
@@ -64,7 +63,7 @@ func main() {
 	}
 
 	for _, msg := range getResp.Messages {
-		fmt.Printf("Mesage: [%s] [%s] [%s]\n", msg.User, time.Unix(0, msg.Timestamp).Format("2006-01-02 15:04:05.000"), msg.Text)
+		fmt.Printf("Mesage: [%s] [%s]\n", msg.User, msg.Text)
 	}
 
 	fmt.Printf("Goodbye\n")
