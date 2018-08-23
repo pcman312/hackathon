@@ -19,3 +19,10 @@ steps:
   waitFor: ['-']
   env:
     - "PROJECT_ID=$PROJECT_ID"
+
+# Build the docker container
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hackathon', '.' ]
+
+images:
+- 'gcr.io/$PROJECT_ID/hackathon'

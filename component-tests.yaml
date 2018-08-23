@@ -10,7 +10,11 @@ services:
       timeout: 5s
       retries: 10
   hackathon:
-    build: .
+    build:
+      dockerfile: Dockerfile
+      context: .
+#      args:
+#        build: "service"
     ports:
     - "9090:9090"
     depends_on:
@@ -19,7 +23,11 @@ services:
     links:
     - "elasticsearch"
   component-test:
-    build: ./component_tests/
+    build:
+      dockerfile: component_tests/Dockerfile
+      context: .
+#      args:
+#        build: "component-tests"
     depends_on:
     - "hackathon"
     links:
