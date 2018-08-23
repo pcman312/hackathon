@@ -1,6 +1,7 @@
 steps:
 # Make sure the project builds
 - name: 'gcr.io/cloud-builders/go'
+  id: build
   args: ['install', 'github.com/pcman312/hackathon']
   waitFor: ['-']
   env:
@@ -8,6 +9,7 @@ steps:
 
 # Run unit tests
 - name: 'gcr.io/cloud-builders/go:debian'
+  id: unit-tests
   args: ['test', '-v', '-race', './...']
   waitFor: ['-']
   env:
@@ -15,6 +17,7 @@ steps:
 
 # Run component tests
 - name: 'docker/compose:1.15.0'
+  id: component-tests
   args: ['-f', 'component-tests.yaml', 'up', '--abort-on-container-exit', '--exit-code-from', 'component-test']
   waitFor: ['-']
   env:
@@ -22,7 +25,8 @@ steps:
 
 # Build the docker container
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hackathon', '.' ]
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hackathon:$TAG_NAME', '.' ]
+  waitFor: ['build', 'unit-tests', 'component-tests']
 
 images:
 - 'gcr.io/$PROJECT_ID/hackathon'
