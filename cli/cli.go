@@ -12,8 +12,9 @@ import (
 )
 
 type Opts struct {
-	User string `short:"u" required:"true"`
-	Text string `short:"m" required:"true"`
+	Host string `short:"h" required:"true" description:"Host to connect to"`
+	User string `short:"u" required:"true" description:"User that is sending the message"`
+	Text string `short:"m" required:"true" description:"Text of the message"`
 }
 
 func main() {
@@ -31,7 +32,7 @@ func main() {
 	}
 
 	fmt.Printf("Dialing server...\n")
-	cc, err := grpc.Dial("localhost:9090", grpc.WithInsecure())
+	cc, err := grpc.Dial(opts.Host, grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
