@@ -25,6 +25,7 @@ steps:
 
 # Build the docker container
 - name: 'gcr.io/cloud-builders/docker'
+  id: "build-container"
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hackathon:$TAG_NAME', '.' ]
   waitFor: ['build', 'unit-tests', 'component-tests']
 
