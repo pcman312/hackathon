@@ -5,7 +5,7 @@ steps:
   args: ['install', 'github.com/pcman312/hackathon']
   waitFor: ['-']
   env:
-    - "PROJECT_ROOT=github.com/pcman312/hackathon"
+  - "PROJECT_ROOT=github.com/pcman312/hackathon"
 
 # Run unit tests
 - name: 'gcr.io/cloud-builders/go:debian'
@@ -21,7 +21,7 @@ steps:
   args: ['-f', 'component-tests.yaml', 'up', '--abort-on-container-exit', '--exit-code-from', 'component-test']
   waitFor: ['-']
   env:
-    - "PROJECT_ID=$PROJECT_ID"
+  - "PROJECT_ID=$PROJECT_ID"
 
 # Build the docker container
 - name: 'gcr.io/cloud-builders/docker'
