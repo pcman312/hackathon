@@ -70,7 +70,27 @@ func main() {
 
 	d := death.NewDeath(syscall.SIGTERM, syscall.SIGINT)
 
-	go grpcServer.Serve(lis)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(rw http.ResponseWriter, req *http.Request) {
+		rw.WriteHeader(http.StatusOK)
+		fmt.Fprintln(rw, "Hello, World!")
+	})
+
+	go func() {
+		err = http.ListenAndServe(":80", mux)
+		if err != nil {
+			log.Criticalf("Failed to serve HTTP endpoint: %s", err)
+		}
+		d.FallOnSword()
+	}()
+
+	go func() {
+		err = grpcServer.Serve(lis)
+		if err != nil {
+			log.Criticalf("Failed to serve GRPC endpoint: %s", err)
+		}
+		d.FallOnSword()
+	}()
 
 	d.WaitForDeathWithFunc(func() {
 		done := make(chan bool, 0)
