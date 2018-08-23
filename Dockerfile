@@ -13,6 +13,7 @@ COPY --from=build-env \
   # Destination
   /
 
+EXPOSE 80
 EXPOSE 9090
 
 ENTRYPOINT /hackathon
