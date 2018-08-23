@@ -71,10 +71,7 @@ func main() {
 	d := death.NewDeath(syscall.SIGTERM, syscall.SIGINT)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(rw http.ResponseWriter, req *http.Request) {
-		rw.WriteHeader(http.StatusOK)
-		fmt.Fprintln(rw, "Hello, World!")
-	})
+	mux.HandleFunc("/", services.HelloWorld)
 
 	go func() {
 		err = http.ListenAndServe(":80", mux)
