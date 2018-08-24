@@ -1,33 +1,36 @@
 steps:
-# Make sure the project builds
-- name: 'gcr.io/cloud-builders/go'
-  id: build
-  args: ['install', 'github.com/pcman312/hackathon']
-  waitFor: ['-']
-  env:
-  - "PROJECT_ROOT=github.com/pcman312/hackathon"
 
-# Run unit tests
-- name: 'gcr.io/cloud-builders/go:debian'
-  id: unit-tests
-  args: ['test', '-v', '-race', './...']
-  waitFor: ['-']
-  env:
-  - "PROJECT_ROOT=github.com/pcman312/hackathon"
+# Disabled for demonstration - these parts slow it down and we only have 5 minutes to talk
 
-# Run component tests
-- name: 'docker/compose:1.15.0'
-  id: component-tests
-  args: ['-f', 'component-tests.yaml', 'up', '--abort-on-container-exit', '--exit-code-from', 'component-test']
-  waitFor: ['-']
-  env:
-  - "PROJECT_ID=$PROJECT_ID"
+## Make sure the project builds
+#- name: 'gcr.io/cloud-builders/go'
+#  id: build
+#  args: ['install', 'github.com/pcman312/hackathon']
+#  waitFor: ['-']
+#  env:
+#  - "PROJECT_ROOT=github.com/pcman312/hackathon"
+#
+## Run unit tests
+#- name: 'gcr.io/cloud-builders/go:debian'
+#  id: unit-tests
+#  args: ['test', '-v', '-race', './...']
+#  waitFor: ['-']
+#  env:
+#  - "PROJECT_ROOT=github.com/pcman312/hackathon"
+#
+## Run component tests
+#- name: 'docker/compose:1.15.0'
+#  id: component-tests
+#  args: ['-f', 'component-tests.yaml', 'up', '--abort-on-container-exit', '--exit-code-from', 'component-test']
+#  waitFor: ['-']
+#  env:
+#  - "PROJECT_ID=$PROJECT_ID"
 
 # Build the docker container
 - name: 'gcr.io/cloud-builders/docker'
   id: "build-container"
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hackathon:$TAG_NAME', '.' ]
-  waitFor: ['build', 'unit-tests', 'component-tests']
+#  waitFor: ['build', 'unit-tests', 'component-tests']
 
 images:
 - 'gcr.io/$PROJECT_ID/hackathon'
